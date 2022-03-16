@@ -1,11 +1,12 @@
 package ru.tinkoff.dmitry.popkov.interview.translationservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
 public class TranslationResult {
-    private Language targetLanguage;
+    @JsonUnwrapped
     private String translatedText;
 }
