@@ -9,16 +9,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.TranslationRequest;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.TranslationResult;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.YandexApiTranslationRequest;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.YandexApiTranslationResponse;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.*;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TranslationServiceImpl implements TranslationService {
+
+    // TODO: 3/16/22 REST errors handling
 
     private final WebClient yandexClient;
 
@@ -32,6 +31,7 @@ public class TranslationServiceImpl implements TranslationService {
                 .targetLanguageCode(translationRequest.getTarget())
                 .texts(List.of(translationRequest.getText())).build();
         ResponseEntity<YandexApiTranslationResponse> res = yandexClient.post()
+                .uri("/translate")
                 .bodyValue(request)
                 .retrieve()
                 .toEntity(YandexApiTranslationResponse.class)
@@ -41,5 +41,15 @@ public class TranslationServiceImpl implements TranslationService {
                 .translatedText(yandexResponse.getTranslations().get(0).getText())
                 .build();
         return translationResult;
+    }
+
+    @Override
+    public LanguageList getAcceptedLanguages() {
+        return yandexClient.post()
+                .uri("/languages")
+                .bodyValue(new YandexApiLanguagesRequest(cloudFolderId))
+                .retrieve()
+                .toEntity(LanguageList.class)
+                .block().getBody();
     }
 }

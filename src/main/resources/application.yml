@@ -1,6 +1,6 @@
 services:
   translate:
     yandex:
-      url: https://translate.api.cloud.yandex.net/translate/v2/translate
+      url: https://translate.api.cloud.yandex.net/translate/v2
       authorization: Bearer t1.9euelZrMz5SJz4mLkZybzMbIlImajO3rnpWayMySk4mdkpWciYmJj8fIl8nl8_caDTdu-e8tOlA9_d3z91o7NG757y06UD39.ekVBDwn1OdOt5eQfKb775bWTa4mHejjytsyBbTnAu5St5cDWr5RRbroI2MqqxuFAttiLxZTPb9p11T4ab51vDw
       folder: b1gnbjk2q1k6bmd1le37

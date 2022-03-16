@@ -2,8 +2,9 @@ package ru.tinkoff.dmitry.popkov.interview.translationservice.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class Language {
-    private String code;
-    private String name;
+public class LanguageList {
+    private List<Language> languages;
 }

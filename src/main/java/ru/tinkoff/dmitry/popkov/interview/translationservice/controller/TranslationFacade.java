@@ -3,12 +3,11 @@ package ru.tinkoff.dmitry.popkov.interview.translationservice.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.Language;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.LanguageList;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.TranslationRequest;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.TranslationResult;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.service.StorageService;
@@ -29,8 +28,8 @@ public class TranslationFacade {
     // TODO: 3/16/22 Exception handling
 
     @GetMapping("/available")
-    public ResponseEntity<List<Language>> getSupportedLanguages() {
-        return ResponseEntity.ok(Arrays.asList(Language.values()));
+    public ResponseEntity<LanguageList> getSupportedLanguages() {
+        return ResponseEntity.ok(translationService.getAcceptedLanguages());
     }
     @PostMapping("/translate")
     public ResponseEntity<TranslationResult> translate(TranslationRequest request) {
