@@ -24,6 +24,7 @@ public class YandexTranslationService implements TranslationService {
     // TODO: 3/16/22 REST errors handling
 
     private final YandexTranslator translator;
+    private final TextTokensProcessor textTokensProcessor;
 
     @Setter(onMethod = @__(@Value("${services.translate.yandex.folder}")))
     private String cloudFolderId;
@@ -31,19 +32,19 @@ public class YandexTranslationService implements TranslationService {
     @Override
     public TranslationResult translate(TranslationRequest translationRequest) {
         String targetLanguage = translationRequest.getTarget();
-        String translatedText =
-                Arrays.stream(translationRequest.getText().split(splitPattern.pattern()))
-                .parallel()
-                .map(word -> YandexApiTranslationRequest.builder()
-                        .folderId(cloudFolderId).targetLanguageCode(targetLanguage)
-                        .texts(List.of(word)).build())
-                .map(translator::translate)
-                .map(resp -> resp.getTranslations().get(0).getText())
-                .collect(Collectors.joining(""));
+
+        String translatedText = textTokensProcessor.mapWords(translationRequest.getText(),
+                word -> getTranslatedWord(word, targetLanguage));
         return TranslationResult.builder()
                 .translatedText(translatedText).build();
     }
 
+    private String getTranslatedWord(String word, String targetLanguageCode) {
+        YandexApiTranslationRequest request = YandexApiTranslationRequest.builder()
+                .folderId(cloudFolderId).targetLanguageCode(targetLanguageCode)
+                .texts(List.of(word)).build();
+        return translator.translate(request).getTranslations().get(0).getText();
+    }
     @Override
     public LanguageList getAcceptedLanguages() {
         return translator.getAvailableLanguages(new YandexApiLanguagesRequest(cloudFolderId));
