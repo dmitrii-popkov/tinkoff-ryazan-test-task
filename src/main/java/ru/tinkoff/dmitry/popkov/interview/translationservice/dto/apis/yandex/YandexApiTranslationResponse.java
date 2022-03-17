@@ -1,4 +1,4 @@
-package ru.tinkoff.dmitry.popkov.interview.translationservice.dto;
+package ru.tinkoff.dmitry.popkov.interview.translationservice.dto.apis.yandex;
 
 import lombok.Data;
 

@@ -1,8 +1,10 @@
 services:
   translate:
+    duckduckgo:
+      url: https://duckduckgo.com/translation.js
     yandex:
       url: https://translate.api.cloud.yandex.net/translate/v2
-      authorization: Bearer t1.9euelZrMz5SJz4mLkZybzMbIlImajO3rnpWayMySk4mdkpWciYmJj8fIl8nl8_caDTdu-e8tOlA9_d3z91o7NG757y06UD39.ekVBDwn1OdOt5eQfKb775bWTa4mHejjytsyBbTnAu5St5cDWr5RRbroI2MqqxuFAttiLxZTPb9p11T4ab51vDw
+      authorization: Bearer t1.9euelZrHxo6QzY7KlseYmZCNjYudnO3rnpWayMySk4mdkpWciYmJj8fIl8nl8_dWJTFu-e9HUWhe_d3z9xZULm7570dRaF79.4mFdmGO1LNEYqxZepHolCaM38aM6r0tjhqm4Z1WEOrEPX7Tq2yr3zMwGV1qol5HzTGn8VvArXq1Cz9QQ7ZMhAQ
       folder: b1gnbjk2q1k6bmd1le37
 
 spring:
@@ -22,3 +24,6 @@ spring:
       settings:
         trace: false
         web-allow-others: false
+
+  profiles:
+    active: prod
