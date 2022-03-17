@@ -27,6 +27,7 @@ import java.net.URI;
 @EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
 
+    // TODO: 3/17/22 Call yc iam create-token
     @Bean
     public WebClient getYandexClient(
             @Value("${services.translate.yandex.url}") String url,

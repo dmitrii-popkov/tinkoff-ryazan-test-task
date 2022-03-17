@@ -6,5 +6,5 @@ import java.util.List;
 
 @Data
 public class LanguageList {
-    private List<Language> languages;
+    private List<LanguageDto> languages;
 }

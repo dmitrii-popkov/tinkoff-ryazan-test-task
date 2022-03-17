@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class YandexTranslationService implements TranslationService {
-
-    private static final Pattern splitPattern = Pattern.compile("(?=[ .,])");
     // TODO: 3/16/22 REST errors handling
 
     private final YandexTranslator translator;
@@ -32,7 +30,6 @@ public class YandexTranslationService implements TranslationService {
     @Override
     public TranslationResult translate(TranslationRequest translationRequest) {
         String targetLanguage = translationRequest.getTarget();
-
         String translatedText = textTokensProcessor.mapWords(translationRequest.getText(),
                 word -> getTranslatedWord(word, targetLanguage));
         return TranslationResult.builder()

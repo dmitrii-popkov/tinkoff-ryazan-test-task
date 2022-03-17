@@ -33,9 +33,12 @@ public class TextTokensProcessor {
             String extractedWord = matchResult.group(2);
             String delimeterAfter = matchResult.group(3);
             if (!extractedWord.isEmpty()) {
-                resultWord = delimeterBefore + transformOperator.apply(extractedWord) + delimeterAfter;
+                resultWord = delimeterBefore + applyTransformation(extractedWord, transformOperator) + delimeterAfter;
             }
         }
         return resultWord;
+    }
+    private String applyTransformation(String word, UnaryOperator<String> transformOperator) {
+        return transformOperator.apply(word);
     }
 }

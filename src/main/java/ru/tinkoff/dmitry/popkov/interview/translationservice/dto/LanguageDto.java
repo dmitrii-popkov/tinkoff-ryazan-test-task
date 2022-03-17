@@ -3,7 +3,7 @@ package ru.tinkoff.dmitry.popkov.interview.translationservice.dto;
 import lombok.Data;
 
 @Data
-public class Language {
+public class LanguageDto {
     private String code;
     private String name;
 }
