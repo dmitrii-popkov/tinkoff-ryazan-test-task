@@ -23,7 +23,9 @@ spring:
       path: /h2-console
       settings:
         trace: false
-        web-allow-others: false
+        web-allow-others: true
 
   profiles:
-    active: dev
+    active: prod
+server:
+  port: ${PORT:8080}
