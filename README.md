@@ -1,20 +1,21 @@
 # tinkoff-ryazan-test-task
 Test task for interview
 
-Simple REST translation service
-FEATURES:
-IN -> json (translationLanguage, text)
-OUT -> json (translationLanguage, text(translated))
+Heroku link: https://translation-app-tinkoff.herokuapp.com/
+!!!На Heroku не работает h2 database (ограничения платформы)!!!
 
-USES GOOGLE API
+Задание: REST back, который переводит текст по словам
+/translate - POST languageCode, text
+/available - GET
 
-DB schema:
-TranslationRequest - language, ip, textTranslationId
+Для тестирования по / развернут swagger-ui
+/h2-console - консоль. Креды в application.yml
 
-Word - value
+Два варианта внешнего API: спираченная с клиентского сайта duckduckgo и честная yandex cloud api
 
-TEXT - many-to-many of words ??
+duckduckgo: dev profile, /available недоступен
+yandex: prod profile, требуется обновлять iam token, креды для облака в application.yml, шедулер каждые 12 часов (не меньше)
 
-WordTranslation - language, wordSource, wordTarget (many-to-many word-to-word)
+Многопоточка - на стримах, используется Stream API join fork пул.
 
-TextTranslation - language, textSource, textTarget (many-to-many text-to-text)
+Для записи в БД применяется АоП, т.к. считаю, что в данной задаче это - задача мониторинга, и ее надо держать отдельно от бизнес-логике
