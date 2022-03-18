@@ -69,8 +69,7 @@ public class MvcConfig implements WebMvcConfigurer {
             }
         }
         return ClientInfo.builder()
-//                .ip(remoteAddr)
-                .ip(String.valueOf(new Random().nextLong()))
+                .ip(remoteAddr)
                 .translations(new ArrayList<>())
                 .build();
     }
