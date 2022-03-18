@@ -3,7 +3,7 @@ package ru.tinkoff.dmitry.popkov.interview.translationservice.service.persist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.LanguageList;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.LanguageList;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.entity.Language;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.entity.TranslationRecord;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.entity.Word;

@@ -5,21 +5,17 @@ import lombok.Setter;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextListener;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.*;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.ClientInfo;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.LanguageList;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.in.TranslationRequest;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.TranslationResultDto;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.entity.Language;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.entity.TranslationRecord;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.entity.WordTranslation;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.service.persist.StorageService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

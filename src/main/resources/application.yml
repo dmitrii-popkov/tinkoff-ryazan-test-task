@@ -2,6 +2,8 @@ services:
   translate:
     duckduckgo:
       url: https://duckduckgo.com/translation.js
+      vqd: 3-209471292243298217398241330070234284141-318046260352965599226810973816411707345
+      query: translate word
     yandex:
       url: https://translate.api.cloud.yandex.net/translate/v2
       authorization: Bearer t1.9euelZqQzZmLjM6cksmQlcyMksiMyu3rnpWayMySk4mdkpWciYmJj8fIl8nl9PdUQy5u-e8bYHHr3fT3FHIrbvnvG2Bx6w.FIDZTsY3RCy7MMN1cWcmWCrgbs2vVo7nKmljZTYQOTC7i3YVcDs32DAuxnP4heKfIeD0ZT3lErz81MVq7jHaCw

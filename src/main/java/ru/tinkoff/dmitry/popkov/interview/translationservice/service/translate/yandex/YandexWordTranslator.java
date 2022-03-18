@@ -10,11 +10,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.ServletContextAware;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.apis.yandex.YandexApiTranslationRequest;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.WordTranslator;
 
-import javax.servlet.ServletContext;
 import java.util.List;
 
 @Service

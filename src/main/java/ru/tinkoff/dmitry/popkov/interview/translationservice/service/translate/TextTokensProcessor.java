@@ -1,18 +1,15 @@
 package ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate;
 
 import org.springframework.stereotype.Service;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.TranslationDto;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.TranslationResultDto;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.TranslationDto;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.TranslationResultDto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Service
 public class TextTokensProcessor {
@@ -21,6 +18,9 @@ public class TextTokensProcessor {
     private static final Pattern TOKENIZE_PATTERN = Pattern.compile(String.format("(?=[%s]+)", DELIMETERS));
     private static final Pattern MAP_PATTERN =
             Pattern.compile(String.format("([%s]*)(.*?)([%s]*)", DELIMETERS, DELIMETERS));
+    private static final int DELIMETER_BEFORE_GROUP = 1;
+    private static final int WORD_GROUP = 2;
+    private static final int DELIMETER_AFTER_GROUP = 3;
 
 
     public TranslationResultDto mapWords(String text, UnaryOperator<String> wordsModifyOperator) {
@@ -41,9 +41,9 @@ public class TextTokensProcessor {
         Matcher matcher = MAP_PATTERN.matcher(word);
         if (matcher.matches()) {
             MatchResult matchResult = matcher.toMatchResult();
-            String delimeterBefore = matchResult.group(1);
-            String extractedWord = matchResult.group(2);
-            String delimeterAfter = matchResult.group(3);
+            String delimeterBefore = matchResult.group(DELIMETER_BEFORE_GROUP);
+            String extractedWord = matchResult.group(WORD_GROUP);
+            String delimeterAfter = matchResult.group(DELIMETER_AFTER_GROUP);
             dtoBuilder.delimeterBefore(delimeterBefore)
                     .delimeterAfter(delimeterAfter)
                     .sourceWord(extractedWord);

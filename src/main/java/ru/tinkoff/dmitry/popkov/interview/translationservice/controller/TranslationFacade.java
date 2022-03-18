@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.LanguageList;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.TranslationRequest;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.TranslationResult;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.TranslationResultDto;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.service.persist.StorageService;
+import org.springframework.web.reactive.function.client.WebClientException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.LanguageList;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.in.TranslationRequest;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.TranslationResultDto;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.TranslationService;
 
 @RestController
@@ -18,10 +18,10 @@ public class TranslationFacade {
 
     private final TranslationService translationService;
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler({IllegalAccessException.class, NullPointerException.class,
+            WebClientResponseException.class, UnsupportedOperationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void apiErrorHandler() {
-
     }
 
     @GetMapping("/available")

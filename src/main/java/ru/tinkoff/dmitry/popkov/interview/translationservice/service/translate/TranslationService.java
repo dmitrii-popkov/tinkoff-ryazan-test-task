@@ -1,7 +1,9 @@
 package ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate;
 
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.*;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.apis.yandex.YandexApiTranslationRequest;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.LanguageList;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.TranslationDto;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.in.TranslationRequest;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.endpoint.out.TranslationResultDto;
 
 import java.util.List;
 

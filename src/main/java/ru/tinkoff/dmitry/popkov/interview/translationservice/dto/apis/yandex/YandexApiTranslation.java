@@ -1,6 +1,5 @@
 package ru.tinkoff.dmitry.popkov.interview.translationservice.dto.apis.yandex;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
