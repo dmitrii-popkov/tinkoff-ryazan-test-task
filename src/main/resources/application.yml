@@ -4,8 +4,9 @@ services:
       url: https://duckduckgo.com/translation.js
     yandex:
       url: https://translate.api.cloud.yandex.net/translate/v2
-      authorization: Bearer t1.9euelZrHxo6QzY7KlseYmZCNjYudnO3rnpWayMySk4mdkpWciYmJj8fIl8nl8_dWJTFu-e9HUWhe_d3z9xZULm7570dRaF79.4mFdmGO1LNEYqxZepHolCaM38aM6r0tjhqm4Z1WEOrEPX7Tq2yr3zMwGV1qol5HzTGn8VvArXq1Cz9QQ7ZMhAQ
+      authorization: Bearer t1.9euelZqQzZmLjM6cksmQlcyMksiMyu3rnpWayMySk4mdkpWciYmJj8fIl8nl9PdUQy5u-e8bYHHr3fT3FHIrbvnvG2Bx6w.FIDZTsY3RCy7MMN1cWcmWCrgbs2vVo7nKmljZTYQOTC7i3YVcDs32DAuxnP4heKfIeD0ZT3lErz81MVq7jHaCw
       folder: b1gnbjk2q1k6bmd1le37
+      auth-token: insert ur token here
 
 spring:
   datasource:

@@ -11,8 +11,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.ClientInfo;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.apis.yandex.ApiToken;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.entity.WordTranslation;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Configuration
 @EnableWebMvc
@@ -23,16 +28,19 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean
     @Profile("prod")
     public WebClient getYandexClient(
-            @Value("${services.translate.yandex.url}") String url,
-            @Value("${services.translate.yandex.authorization}") String token
+            @Value("${services.translate.yandex.url}") String url
     ) {
         return WebClient.builder()
                 .baseUrl(url)
                 .defaultHeaders(httpHeaders -> {
                     httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-                    httpHeaders.add("Authorization", token);
                 })
                 .build();
+    }
+    @Bean
+    public ApiToken yandexIamToken(
+            @Value("${services.translate.yandex.authorization}") String defaultToken) {
+        return new ApiToken(defaultToken);
     }
     @Bean
     @Profile("dev")
@@ -43,13 +51,14 @@ public class MvcConfig implements WebMvcConfigurer {
                 .baseUrl(url)
                 .build();
     }
+
     @Bean
     public RequestContextListener requestContextListener(){
         return new RequestContextListener();
     }
 
     @Bean
-    @RequestScope
+    @RequestScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
     public ClientInfo getIp(HttpServletRequest request) {
         String remoteAddr = "";
 
@@ -59,9 +68,13 @@ public class MvcConfig implements WebMvcConfigurer {
                 remoteAddr = request.getRemoteAddr();
             }
         }
-
-        return ClientInfo.builder().ip(remoteAddr).build();
+        return ClientInfo.builder()
+//                .ip(remoteAddr)
+                .ip(String.valueOf(new Random().nextLong()))
+                .translations(new ArrayList<>())
+                .build();
     }
+
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/", "/swagger-ui.html");
     }

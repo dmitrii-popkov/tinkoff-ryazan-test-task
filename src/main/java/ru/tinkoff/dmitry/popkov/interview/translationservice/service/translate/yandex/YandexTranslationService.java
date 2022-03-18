@@ -26,12 +26,14 @@ public class YandexTranslationService implements TranslationService {
     private String cloudFolderId;
 
     @Override
-    public TranslationResult translate(TranslationRequest translationRequest) {
+    public TranslationResultDto translate(TranslationRequest translationRequest) {
         String targetLanguage = translationRequest.getTarget();
-        String translatedText = textTokensProcessor.mapWords(translationRequest.getText(),
+        TranslationResultDto translatedResultDto = textTokensProcessor.mapWords(translationRequest.getText(),
                 word -> wordTranslator.translate(word, targetLanguage));
-        return TranslationResult.builder()
-                .translatedText(translatedText).build();
+        translatedResultDto.setInputText(translationRequest.getText());
+        translatedResultDto.setLanguageCode(targetLanguage);
+        translatedResultDto.setOutputText(mergeWords(translatedResultDto.getTranslations()));
+        return translatedResultDto;
     }
 
     @Override
