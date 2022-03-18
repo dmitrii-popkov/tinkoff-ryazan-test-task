@@ -1,30 +1,18 @@
 package ru.tinkoff.dmitry.popkov.interview.translationservice.config;
 
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.format.FormatterRegistry;
+import org.springframework.context.annotation.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceView;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.ClientInfo;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
-import java.util.Map;
 
 @Configuration
 @EnableWebMvc
@@ -59,21 +47,21 @@ public class MvcConfig implements WebMvcConfigurer {
     public RequestContextListener requestContextListener(){
         return new RequestContextListener();
     }
-//    @Bean
-//    @RequestScope
-//    public String getIp( HttpServletRequest request) {
-//        String remoteAddr = "";
-//
-//        if (request != null) {
-//            remoteAddr = request.getHeader("X-FORWARDED-FOR");
-//            if (remoteAddr == null || "".equals(remoteAddr)) {
-//                remoteAddr = request.getRemoteAddr();
-//            }
-//        }
-//
-//        return remoteAddr;
-//    }
-    @Override
+
+    @Bean
+    @RequestScope
+    public ClientInfo getIp(HttpServletRequest request) {
+        String remoteAddr = "";
+
+        if (request != null) {
+            remoteAddr = request.getHeader("X-FORWARDED-FOR");
+            if (remoteAddr == null || "".equals(remoteAddr)) {
+                remoteAddr = request.getRemoteAddr();
+            }
+        }
+
+        return ClientInfo.builder().ip(remoteAddr).build();
+    }
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/", "/swagger-ui.html");
     }

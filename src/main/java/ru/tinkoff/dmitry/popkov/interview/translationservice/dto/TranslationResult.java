@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class TranslationResult {
-    @JsonUnwrapped
     private String translatedText;
 }

@@ -1,4 +1,4 @@
-package ru.tinkoff.dmitry.popkov.interview.translationservice.service;
+package ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate;
 
 import org.springframework.stereotype.Service;
 
@@ -17,13 +17,14 @@ public class TextTokensProcessor {
     private static final Pattern MAP_PATTERN =
             Pattern.compile(String.format("([%s]*)(.*?)([%s]*)", DELIMETERS, DELIMETERS));
 
+
     public String mapWords(String text, UnaryOperator<String> wordsModifyOperator) {
         String[] splittedText = text.split(TOKENIZE_PATTERN.pattern());
-
         return Arrays.stream(splittedText).parallel()
                 .map(token -> transformWord(token, wordsModifyOperator))
                 .collect(Collectors.joining(""));
     }
+
     private String transformWord(String word, UnaryOperator<String> transformOperator) {
         String resultWord = word;
         Matcher matcher = MAP_PATTERN.matcher(word);
@@ -33,7 +34,8 @@ public class TextTokensProcessor {
             String extractedWord = matchResult.group(2);
             String delimeterAfter = matchResult.group(3);
             if (!extractedWord.isEmpty()) {
-                resultWord = delimeterBefore + applyTransformation(extractedWord, transformOperator) + delimeterAfter;
+                String transformedWord = applyTransformation(extractedWord, transformOperator);
+                resultWord = delimeterBefore + transformedWord + delimeterAfter;
             }
         }
         return resultWord;

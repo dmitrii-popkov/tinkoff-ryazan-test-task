@@ -1,4 +1,4 @@
-package ru.tinkoff.dmitry.popkov.interview.translationservice.service;
+package ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.yandex;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.*;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.apis.yandex.YandexApiLanguagesRequest;
-import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.apis.yandex.YandexApiTranslationRequest;
-
-import java.util.List;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.TextTokensProcessor;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.TranslationService;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.WordTranslator;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -19,6 +19,7 @@ public class YandexTranslationService implements TranslationService {
     // TODO: 3/16/22 REST errors handling
 
     private final YandexTranslator translator;
+    private final WordTranslator wordTranslator;
     private final TextTokensProcessor textTokensProcessor;
 
     @Setter(onMethod = @__(@Value("${services.translate.yandex.folder}")))
@@ -28,17 +29,11 @@ public class YandexTranslationService implements TranslationService {
     public TranslationResult translate(TranslationRequest translationRequest) {
         String targetLanguage = translationRequest.getTarget();
         String translatedText = textTokensProcessor.mapWords(translationRequest.getText(),
-                word -> getTranslatedWord(word, targetLanguage));
+                word -> wordTranslator.translate(word, targetLanguage));
         return TranslationResult.builder()
                 .translatedText(translatedText).build();
     }
 
-    private String getTranslatedWord(String word, String targetLanguageCode) {
-        YandexApiTranslationRequest request = YandexApiTranslationRequest.builder()
-                .folderId(cloudFolderId).targetLanguageCode(targetLanguageCode)
-                .texts(List.of(word)).build();
-        return translator.translate(request).getTranslations().get(0).getText();
-    }
     @Override
     public LanguageList getAcceptedLanguages() {
         return translator.getAvailableLanguages(new YandexApiLanguagesRequest(cloudFolderId));

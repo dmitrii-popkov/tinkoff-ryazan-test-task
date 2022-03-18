@@ -1,12 +1,13 @@
-package ru.tinkoff.dmitry.popkov.interview.translationservice.service;
+package ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.duckduckgo;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.dmitry.popkov.interview.translationservice.dto.*;
-
-import java.util.List;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.TextTokensProcessor;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.TranslationService;
+import ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.WordTranslator;
 
 @Service
 @Profile("dev")
@@ -14,21 +15,18 @@ import java.util.List;
 public class DuckDuckGoTranslationService implements TranslationService {
 
     private final DuckDuckGoTranslator translator;
+    private final WordTranslator wordTranslator;
     private final TextTokensProcessor textTokensProcessor;
 
     @Override
     public TranslationResult translate(TranslationRequest translationRequest) {
         String targetLanguage = translationRequest.getTarget();
         String translatedText = textTokensProcessor.mapWords(translationRequest.getText(),
-                word -> getTranslatedWord(word, targetLanguage));
+                word -> wordTranslator.translate(word, targetLanguage));
         return TranslationResult.builder()
                 .translatedText(translatedText).build();
     }
 
-    private String getTranslatedWord(String word, String targetLanguageCode) {
-
-        return translator.translate(word, targetLanguageCode).getTranslated();
-    }
     @Override
     public LanguageList getAcceptedLanguages() {
         return translator.getAvailableLanguages();

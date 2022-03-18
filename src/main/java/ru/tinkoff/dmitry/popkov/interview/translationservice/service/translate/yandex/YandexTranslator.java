@@ -1,4 +1,4 @@
-package ru.tinkoff.dmitry.popkov.interview.translationservice.service;
+package ru.tinkoff.dmitry.popkov.interview.translationservice.service.translate.yandex;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
